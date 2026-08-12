@@ -18,6 +18,12 @@ API to the public while keeping everything else key-protected.
 | File | Purpose |
 |------|---------|
 | [`public-endpoints.md`](public-endpoints.md) | Endpoint contract (request/response, limits) |
-| [`reference/public_api.php`](reference/public_api.php) | Drop-in single-file PHP reference implementation |
+| [`reference/public_api.php`](reference/public_api.php) | Single-file PHP reference implementation |
 | [`reference/README.md`](reference/README.md) | How to deploy the reference implementation |
 | [`nginx-rate-limit.conf.example`](nginx-rate-limit.conf.example) | nginx `limit_req` snippet (defense-in-depth) |
+
+> **Production status:** the live `api.edelta.ro` integrates these routes directly
+> into its own front controller (repo: `cote-api`, `public/index.php`) with
+> per-IP rate limiting (`api_ip_ratelimit` table, `sql/migrate-public.sql`) —
+> the same contract and limits described here. The single-file reference exists
+> as a portable implementation for other hosts.
