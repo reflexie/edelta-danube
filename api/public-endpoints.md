@@ -1,7 +1,11 @@
 # Public endpoints — contract
 
-These routes are **unauthenticated**, **read-only** and **rate-limited**. Everything
-else on `api.edelta.ro` keeps requiring `X-API-Key`.
+These routes are **unauthenticated**, **read-only** and **rate-limited**.
+Everything else on `api.edelta.ro` — including `/api/measurements/range` and
+`/api/measurements` — keeps requiring `X-API-Key`.
+
+The public API intentionally exposes only recent data (latest reading, plus up to
+**30 days** back). Full date-window history is available with an API key.
 
 Base URL: `https://api.edelta.ro`
 
@@ -19,7 +23,8 @@ All responses are `application/json; charset=utf-8`.
 { "success": false, "error": "Unauthorized", "code": 401, "details": "..." }
 ```
 
-HTTP status codes: `200` OK · `400` bad params · `429` rate limited · `500` server error.
+HTTP status codes: `200` OK · `400` bad params · `403` port outside scope ·
+`429` rate limited · `500` server error.
 
 ---
 
@@ -49,9 +54,9 @@ Returns the most recent measurement for a port.
 
 **Query params:**
 
-| Param      | Type | Required | Notes                       |
-|------------|------|----------|-----------------------------|
-| `port_id`  | int  | yes      | 1..23 (valid ports)         |
+| Param      | Type | Required | Notes               |
+|------------|------|----------|---------------------|
+| `port_id`  | int  | yes      | 1..23 (valid ports) |
 
 **Response `data`:**
 
@@ -64,39 +69,50 @@ Returns the most recent measurement for a port.
 
 ---
 
-## GET `/api/measurements/range?port_id=X&from=YYYY-MM-DD&to=YYYY-MM-DD`
+## GET `/api/measurements/recent?port_id=X&days=N`
 
-Returns all daily measurements in a date window (ascending).
+Returns the most recent measurements, counting **backward** from the latest
+reading, up to a maximum of **30 days** (`days` is clamped server-side).
 
 **Query params:**
 
-| Param     | Type   | Required | Notes                                          |
-|-----------|--------|----------|------------------------------------------------|
-| `port_id` | int    | yes      | 1..23                                          |
-| `from`    | date   | yes      | `YYYY-MM-DD`, >= `2011-01-01`                  |
-| `to`      | date   | yes      | `YYYY-MM-DD`, <= today                         |
-| `limit`   | int    | no       | **Capped server-side at 365** (rows)           |
+| Param     | Type | Required | Notes                                |
+|-----------|------|----------|--------------------------------------|
+| `port_id` | int  | yes      | 1..23 (valid ports)                  |
+| `days`    | int  | no       | 1..30 (default 30, clamped to 30)    |
 
 **Response `data`:**
 
 ```json
 {
   "measurements": [
-    { "date": "2026-08-09", "cota": 18, "temperatura": "28" },
-    { "date": "2026-08-10", "cota": 19, "temperatura": "28" }
+    { "date": "2026-07-12", "cota": 41, "temperatura": "27" },
+    { "date": "2026-07-13", "cota": 41, "temperatura": "27" }
   ],
-  "meta": { "port_id": 2, "port_name": "TULCEA ", "from": "2026-08-01", "to": "2026-08-10", "count": 2 }
+  "meta": { "port_id": 2, "port_name": "TULCEA ", "days": 30, "count": 31 }
 }
 ```
+
+> For more history than 30 days, use an API key with `/api/measurements/range`
+> (or visit the source site — e.g. edelta.ro — which links to the full history).
+
+---
+
+## Key-protected (not public)
+
+- `GET /api/measurements/range?port_id=X&from=Y&to=Z` — full date window
+- `GET /api/measurements?port_id=X&...` — paginated measurements
+- `GET /api/measurements/extremes?port_id=X&from=Y&to=Z` — min/max aggregates
+- `GET /api/ports/{id}` — single port detail
 
 ---
 
 ## Hard limits (server-enforced)
 
-| Rule                            | Value               |
-|----------------------------------|---------------------|
-| Date window                       | max 366 days (`to - from`) |
-| `limit` param                     | max 365 rows         |
-| Rate limit (all public routes)    | **30 req/min per IP** (e.g. nginx `limit_req`); range can be stricter |
-| Read-only                        | no state changes     |
-| Earliest data                    | `2011-01-01`         |
+| Rule                        | Value                         |
+|-----------------------------|-------------------------------|
+| Public `recent` window      | max **30 days** (`days` clamped) |
+| Rate limit (public routes)  | **30 req/min per IP**         |
+| Public port scope           | ports 1..`PUBLIC_PORT_LIMIT` (23) |
+| Read-only                   | no state changes              |
+| Earliest data               | `2011-01-01`                  |

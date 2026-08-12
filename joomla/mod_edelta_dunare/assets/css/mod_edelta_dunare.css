@@ -1,6 +1,9 @@
 /* mod_edelta_dunare — self-contained module styles */
 .mod-edelta-dunare { max-width: 100%; }
 .mod-edelta-dunare-info { font-size: 0.95em; color: #333; margin-bottom: 0.5rem; }
+.mod-edelta-dunare-more { margin-bottom: 0.75rem; font-size: 0.9em; }
+.mod-edelta-dunare-more a { color: #1a73e8; text-decoration: none; border-bottom: 1px dotted #1a73e8; }
+.mod-edelta-dunare-more a:hover { text-decoration: underline; }
 .mod-edelta-dunare-error { color: #b02a37; }
 .mod-edelta-dunare-chart-wrap { position: relative; height: 380px; width: 100%; margin-bottom: 1rem; }
 .mod-edelta-dunare-table-wrap { overflow-x: auto; }

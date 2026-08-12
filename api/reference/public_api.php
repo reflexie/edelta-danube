@@ -5,7 +5,10 @@
  * Public, rate-limited endpoints for the Danube "Cote" dataset:
  *   GET /api/ports
  *   GET /api/measurements/latest?port_id=X
- *   GET /api/measurements/range?port_id=X&from=Y&to=Z[&limit=N]
+ *   GET /api/measurements/recent?port_id=X&days=N   (max 30 days)
+ *
+ * Full date-window routes (/api/measurements/range, /api/measurements) are
+ * KEY-PROTECTED on the production API and are not served here.
  *
  * Requires PDO + MySQL. DB credentials come from the environment.
  * Response envelopes match https://api.edelta.ro so existing clients work.
@@ -16,11 +19,10 @@
 
 declare(strict_types=1);
 
-const MIN_DATE     = '2011-01-01';
-const MAX_WINDOW   = 366; // days
-const MAX_LIMIT    = 365; // rows
-const RATE_LIMIT   = 30;  // requests per IP per minute
-const RATE_WINDOW  = 60;  // seconds
+const MIN_DATE        = '2011-01-01';
+const MAX_RECENT_DAYS = 30; // public recent window (clamped)
+const RATE_LIMIT      = 30; // requests per IP per minute
+const RATE_WINDOW     = 60; // seconds
 
 /** Send a JSON response and stop. */
 function respond(array $payload, int $status = 200): void
@@ -141,18 +143,16 @@ function latestMeasurement(PDO $pdo, int $id): ?array
 }
 
 /** Measurements for a port within a window, ascending. */
-function rangeMeasurements(PDO $pdo, int $id, string $from, string $to, int $limit): array
+function rangeMeasurements(PDO $pdo, int $id, string $from, string $to): array
 {
     $stmt = $pdo->prepare(
         'SELECT date, cota, temperatura FROM cote_data
          WHERE id_locdunare = :id AND date >= :from AND date <= :to
-         ORDER BY date ASC
-         LIMIT :limit'
+         ORDER BY date ASC'
     );
     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
     $stmt->bindValue(':from', $from, PDO::PARAM_STR);
     $stmt->bindValue(':to', $to, PDO::PARAM_STR);
-    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
     $stmt->execute();
 
     return $stmt->fetchAll();
@@ -176,8 +176,9 @@ if ($method !== 'GET') {
 
 $route = route($_SERVER['REQUEST_URI'] ?? '/');
 
-if (!in_array($route, ['ports', 'measurements/latest', 'measurements/range'], true)) {
-    error('Not Found', 404);
+if (!in_array($route, ['ports', 'measurements/latest', 'measurements/recent'], true)) {
+    // Everything else (e.g. /measurements/range) is KEY-PROTECTED in production.
+    error('Unauthorized', 401, 'API key required');
 }
 
 $pdo = db();
@@ -212,7 +213,7 @@ switch ($route) {
         ]);
         break;
 
-    case 'measurements/range':
+    case 'measurements/recent':
         $portId = (int) ($_GET['port_id'] ?? 0);
         $port   = portId($pdo, $portId);
 
@@ -220,24 +221,23 @@ switch ($route) {
             error('Bad Request', 400, 'Invalid or missing port_id');
         }
 
-        $from = $_GET['from'] ?? '';
-        $to   = $_GET['to']   ?? '';
+        $days = max(1, min((int) ($_GET['days'] ?? MAX_RECENT_DAYS), MAX_RECENT_DAYS));
 
-        if (!validDate($from) || !validDate($to)) {
-            error('Bad Request', 400, 'Both "from" and "to" parameters are required (YYYY-MM-DD)');
+        // Count back from the latest reading for this port.
+        $latest = latestMeasurement($pdo, $portId);
+
+        if ($latest === null) {
+            error('Not Found', 404, 'No measurements for this port');
         }
+
+        $to   = $latest['date'];
+        $from = date('Y-m-d', strtotime($to . ' - ' . $days . ' days'));
 
         if ($from < MIN_DATE) {
             $from = MIN_DATE;
         }
 
-        if (($to <= $from) || ((strtotime($to) - strtotime($from)) / 86400 > MAX_WINDOW)) {
-            error('Bad Request', 400, 'Date window must be between 1 and ' . MAX_WINDOW . ' days');
-        }
-
-        $limit = max(1, min((int) ($_GET['limit'] ?? MAX_LIMIT), MAX_LIMIT));
-
-        $rows = rangeMeasurements($pdo, $portId, $from, $to, $limit);
+        $rows = rangeMeasurements($pdo, $portId, $from, $to);
 
         respond([
             'success' => true,
@@ -246,11 +246,14 @@ switch ($route) {
                 'meta'         => [
                     'port_id'   => $port['id'],
                     'port_name' => $port['name'],
-                    'from'      => $from,
-                    'to'        => $to,
+                    'days'      => $days,
                     'count'     => count($rows),
                 ],
             ],
         ]);
         break;
+
+    case 'measurements/range':
+        // Full date-window queries are NOT public — require an API key.
+        error('Unauthorized', 401, 'API key required for /measurements/range');
 }

@@ -1,7 +1,3 @@
-# Changelog
-
-All notable changes to this project will be documented in this file.
-
 ## [Unreleased]
 
 ### Added
@@ -16,3 +12,12 @@ All notable changes to this project will be documented in this file.
   - Server-side fetch from public api.edelta.ro endpoints, cached (default 10 min)
   - Admin params: port, days, display mode (chart / table / both), line color
   - Bundled Chart.js v2.9.1 (MIT) + en-GB/ro-RO/de-DE/ru-RU
+
+## [1.1.0] — 2026-08-13
+
+### Changed
+
+- Public API now serves at most the **latest 30 days** (`/api/measurements/recent`);
+  `/api/measurements/range` is **key-protected**. The module clamps to 30 days and,
+  when more is requested, shows a configurable **"more data on edelta.ro"** link
+  (`more_url` param) to drive traffic to the full history.

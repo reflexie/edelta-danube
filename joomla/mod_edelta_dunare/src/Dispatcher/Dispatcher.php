@@ -35,6 +35,7 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
         $data['module_display'] = (string) $params->get('display', 'both');
         $data['module_border']  = (string) $params->get('borderColor', '#436741');
         $data['module_api']     = rtrim((string) $params->get('api_base', 'https://api.edelta.ro'), '/');
+        $data['module_more_url'] = rtrim((string) $params->get('more_url', 'https://edelta.ro/cotele-apelor-dunarii'), '/');
 
         // Fetch (and cache) the data from the public API.
         $data['module_result'] = $this->getHelperFactory()

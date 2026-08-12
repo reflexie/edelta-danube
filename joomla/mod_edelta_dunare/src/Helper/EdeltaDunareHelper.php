@@ -26,42 +26,50 @@ class EdeltaDunareHelper
     private const HTTP_TIMEOUT = 10;
 
     /**
+     * Public API serves at most this many recent days.
+     *
+     * @var integer
+     * @since 1.1.0
+     */
+    private const PUBLIC_MAX_DAYS = 30;
+
+    /**
      * Fetch recent measurements for a port and return a normalized payload.
      *
      * @param   integer  $port       Port id (1..23)
-     * @param   integer  $days       Number of recent days
+     * @param   integer  $days       Number of recent days requested by the admin
      * @param   string   $apiBase    API base URL (no trailing slash)
      * @param   integer  $cacheTime  Cache lifetime in seconds
      *
-     * @return  array  ['success'=>bool, 'port'=>string, 'rows'=>array, 'error'=>string]
+     * @return  array  ['success'=>bool, 'port'=>string, 'days'=>int, 'rows'=>array, 'error'=>string]
      *
      * @since   1.0.0
      */
     public function getData(int $port, int $days, string $apiBase, int $cacheTime = 600): array
     {
-        $days = max(1, min(365, $days));
-        $from = date('Y-m-d', strtotime('-' . $days . ' days'));
-        $to   = date('Y-m-d');
+        $daysRequested = max(1, min(365, $days));
+        $daysFetched   = min($daysRequested, self::PUBLIC_MAX_DAYS);
 
-        $id = 'range_' . $port . '_' . $from . '_' . $to;
+        $id = 'recent_' . $port . '_' . $daysFetched;
 
         try {
             $cache = Factory::getCache('mod_edelta_dunare', 'callback');
             $cache->options['lifetime'] = max(60, $cacheTime);
 
             $payload = $cache->get(
-                [static::class, 'fetchRange'],
-                [$apiBase, $port, $from, $to],
+                [static::class, 'fetchRecent'],
+                [$apiBase, $port, $daysFetched],
                 $id
             );
         } catch (\Throwable $e) {
-            return ['success' => false, 'port' => '', 'rows' => [], 'error' => $e->getMessage()];
+            return ['success' => false, 'port' => '', 'days' => 0, 'rows' => [], 'error' => $e->getMessage()];
         }
 
         if (!is_array($payload) || empty($payload['success'])) {
             return [
                 'success' => false,
                 'port'    => $payload['port'] ?? '',
+                'days'    => $payload['days'] ?? 0,
                 'rows'    => [],
                 'error'   => $payload['error'] ?? 'Invalid API payload',
             ];
@@ -75,32 +83,31 @@ class EdeltaDunareHelper
      *
      * @param   string   $apiBase  API base URL (no trailing slash)
      * @param   integer  $port     Port id (1..23)
-     * @param   string   $from     Start date (Y-m-d)
-     * @param   string   $to       End date (Y-m-d)
+     * @param   integer  $days     Days to fetch (already clamped server-side)
      *
      * @return  array  Normalized payload
      *
-     * @since   1.0.0
+     * @since   1.1.0
      */
-    public static function fetchRange(string $apiBase, int $port, string $from, string $to): array
+    public static function fetchRecent(string $apiBase, int $port, int $days): array
     {
-        $url = $apiBase . '/api/measurements/range?port_id=' . $port . '&from=' . $from . '&to=' . $to;
+        $url = $apiBase . '/api/measurements/recent?port_id=' . $port . '&days=' . $days;
 
         try {
             $http = HttpFactory::getHttp(['timeout' => self::HTTP_TIMEOUT]);
             $response = $http->get($url, ['Accept' => 'application/json'], self::HTTP_TIMEOUT);
 
             if ($response->getStatusCode() !== 200) {
-                return ['success' => false, 'port' => '', 'rows' => [], 'error' => 'API request failed (HTTP ' . $response->getStatusCode() . ')'];
+                return ['success' => false, 'port' => '', 'days' => $days, 'rows' => [], 'error' => 'API request failed (HTTP ' . $response->getStatusCode() . ')'];
             }
 
             $json = json_decode((string) $response->getBody(), true);
 
             if (!is_array($json) || empty($json['success'])) {
-                return ['success' => false, 'port' => '', 'rows' => [], 'error' => 'Invalid API response'];
+                return ['success' => false, 'port' => '', 'days' => $days, 'rows' => [], 'error' => 'Invalid API response'];
             }
         } catch (\Throwable $e) {
-            return ['success' => false, 'port' => '', 'rows' => [], 'error' => $e->getMessage()];
+            return ['success' => false, 'port' => '', 'days' => $days, 'rows' => [], 'error' => $e->getMessage()];
         }
 
         $rows = [];
@@ -117,6 +124,7 @@ class EdeltaDunareHelper
         return [
             'success' => true,
             'port'    => trim((string) ($json['data']['meta']['port_name'] ?? '')),
+            'days'    => (int) ($json['data']['meta']['days'] ?? $days),
             'rows'    => $rows,
             'error'   => '',
         ];
