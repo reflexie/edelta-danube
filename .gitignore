@@ -1,0 +1,24 @@
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
+*.tmp
+
+# Build artifacts
+*.zip
+!api/**/*.zip
+
+# Logs
+*.log
+
+# Joomla env (never commit credentials)
+**/.env
+!**/.env.example
+
+# WordPress
+wp-content/uploads/
+
+# Composer / npm (if introduced)
+/vendor
+/node_modules
