@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" client="site" method="upgrade">
+	<name>MOD_EDELTA_DUNARE</name>
+	<creationDate>12-Aug-2026</creationDate>
+	<author>edelta-danube contributors</author>
+	<authorEmail>cfeodorov@gmail.com</authorEmail>
+	<authorUrl>https://github.com/reflexie/edelta-danube</authorUrl>
+	<copyright>2026</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<version>1.0.0</version>
+	<description>MOD_EDELTA_DUNARE_XML_DESCRIPTION</description>
+	<namespace path="src">EdeltaDunare\Module\EdeltaDunare</namespace>
+	<files>
+		<folder module="mod_edelta_dunare">services</folder>
+		<folder>src</folder>
+		<folder>tmpl</folder>
+		<folder>assets</folder>
+		<folder>language</folder>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field
+					name="port"
+					type="list"
+					default="2"
+					label="MOD_EDELTA_DUNARE_PORT_LABEL"
+					description="MOD_EDELTA_DUNARE_PORT_DESC">
+					<option value="1">SULINA</option>
+					<option value="2">TULCEA</option>
+					<option value="3">ISACCEA</option>
+					<option value="4">GALATI</option>
+					<option value="5">BRAILA</option>
+					<option value="6">HARSOVA</option>
+					<option value="7">CERNAVODA</option>
+					<option value="8">CALARASI</option>
+					<option value="9">OLTENITA</option>
+					<option value="10">GIURGIU</option>
+					<option value="11">ZIMNICEA</option>
+					<option value="12">TURNU_MAGURELE</option>
+					<option value="13">CORABIA</option>
+					<option value="14">BECHET</option>
+					<option value="15">RAST</option>
+					<option value="16">CALAFAT</option>
+					<option value="17">CETATE</option>
+					<option value="18">GRUIA</option>
+					<option value="19">TURNU_SEVERIN</option>
+					<option value="20">ORSOVA</option>
+					<option value="21">DRENCOVA</option>
+					<option value="22">MOLDOVA_VECHE</option>
+					<option value="23">BAZIAS</option>
+				</field>
+				<field
+					name="days"
+					type="list"
+					default="30"
+					label="MOD_EDELTA_DUNARE_DAYS_LABEL"
+					description="MOD_EDELTA_DUNARE_DAYS_DESC">
+					<option value="7">7</option>
+					<option value="14">14</option>
+					<option value="30">30</option>
+					<option value="60">60</option>
+					<option value="90">90</option>
+					<option value="365">365</option>
+				</field>
+				<field
+					name="display"
+					type="list"
+					default="both"
+					label="MOD_EDELTA_DUNARE_DISPLAY_LABEL"
+					description="MOD_EDELTA_DUNARE_DISPLAY_DESC">
+					<option value="chart">MOD_EDELTA_DUNARE_DISPLAY_CHART</option>
+					<option value="table">MOD_EDELTA_DUNARE_DISPLAY_TABLE</option>
+					<option value="both">MOD_EDELTA_DUNARE_DISPLAY_BOTH</option>
+				</field>
+				<field
+					name="borderColor"
+					type="color"
+					default="#436741"
+					label="MOD_EDELTA_DUNARE_BORDER_COLOR_LABEL"
+					description="MOD_EDELTA_DUNARE_BORDER_COLOR_DESC"/>
+				<field
+					name="api_base"
+					type="text"
+					default="https://api.edelta.ro"
+					label="MOD_EDELTA_DUNARE_API_LABEL"
+					description="MOD_EDELTA_DUNARE_API_DESC"/>
+				<field
+					name="cache_time"
+					type="number"
+					default="600"
+					label="MOD_EDELTA_DUNARE_CACHE_LABEL"
+					description="MOD_EDELTA_DUNARE_CACHE_DESC"
+					filter="integer"/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

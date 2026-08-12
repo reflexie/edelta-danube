@@ -1,0 +1,11 @@
+/* mod_edelta_dunare — self-contained module styles */
+.mod-edelta-dunare { max-width: 100%; }
+.mod-edelta-dunare-info { font-size: 0.95em; color: #333; margin-bottom: 0.5rem; }
+.mod-edelta-dunare-error { color: #b02a37; }
+.mod-edelta-dunare-chart-wrap { position: relative; height: 380px; width: 100%; margin-bottom: 1rem; }
+.mod-edelta-dunare-table-wrap { overflow-x: auto; }
+.mod-edelta-dunare-table { width: 100%; border-collapse: collapse; font-size: 0.95em; }
+.mod-edelta-dunare-table th,
+.mod-edelta-dunare-table td { padding: 6px 10px; border: 1px solid #dee2e6; text-align: center; white-space: nowrap; }
+.mod-edelta-dunare-table thead th { background: #436741; color: #fff; }
+.mod-edelta-dunare-table tbody tr:nth-child(even) { background: #f4f6f4; }
