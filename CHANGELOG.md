@@ -13,6 +13,14 @@
   - Admin params: port, days, display mode (chart / table / both), line color
   - Bundled Chart.js v2.9.1 (MIT) + en-GB/ro-RO/de-DE/ru-RU
 
+## [1.1.1] — 2026-08-13
+
+### Changed
+
+- Days dropdown limited to **7 / 14 / 30** (the public API max is 30 days);
+  the 60/90/365 options were removed since the public endpoint never serves
+  more than 30 days.
+
 ## [1.1.0] — 2026-08-13
 
 ### Changed
