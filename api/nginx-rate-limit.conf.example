@@ -1,0 +1,19 @@
+# nginx rate limiting for the public api.edelta.ro endpoints.
+#
+# Add to http{} context once (adjust zone name / rate to taste), then reference
+# it in the server{} for the public routes. This is defense-in-depth ON TOP of
+# the application-level limiter in reference/public_api.php.
+
+# http {}
+limit_req_zone $binary_remote_addr zone=edelta_public:10m rate=30r/m;
+
+# server {}
+# Public, keyless, rate-limited routes
+location ~ ^/api/(ports|measurements/latest|measurements/range)$ {
+    limit_req zone=edelta_public burst=20 nodelay;
+    limit_req_status 429;
+    include /etc/nginx/proxy_params;      # if proxying to the app
+    proxy_pass http://127.0.0.1:8080;     # your app upstream
+}
+
+# Everything else under /api/ keeps requiring the X-API-Key (not rate-limited here)
