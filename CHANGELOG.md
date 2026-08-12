@@ -20,4 +20,4 @@
 - Public API now serves at most the **latest 30 days** (`/api/measurements/recent`);
   `/api/measurements/range` is **key-protected**. The module clamps to 30 days and,
   when more is requested, shows a configurable **"more data on edelta.ro"** link
-  (`more_url` param) to drive traffic to the full history.
+  (`more_url` param)  to the full history.
