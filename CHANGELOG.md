@@ -13,6 +13,14 @@
   - Admin params: port, days, display mode (chart / table / both), line color
   - Bundled Chart.js v2.9.1 (MIT) + en-GB/ro-RO/de-DE/ru-RU
 
+## [1.1.2] — 2026-08-13
+
+### Changed
+
+- A small, permanent **"more data on edelta.ro"** link is now rendered at the
+  bottom of the module (always, regardless of the selected days), using the
+  configurable `more_url` parameter.
+
 ## [1.1.1] — 2026-08-13
 
 ### Changed

@@ -20,7 +20,7 @@ $moreUrl = (string) $module_more_url;
 
 // The public API serves at most 30 days; show the actual days returned.
 $daysShown     = (int) ($result['days'] ?? $days);
-$showMoreLink  = $days > 30 && $moreUrl !== '';
+$showBottomLink = $moreUrl !== '';
 
 $showChart = ($display === 'chart' || $display === 'both');
 $showTable = ($display === 'table' || $display === 'both');
@@ -66,14 +66,6 @@ $jsTitle  = json_encode(Text::sprintf('MOD_EDELTA_DUNARE_LAST_DAYS', $daysShown)
 			<?php if ($portNm !== ''): ?><strong><?php echo htmlspecialchars($portNm, ENT_QUOTES, 'UTF-8'); ?></strong><?php endif; ?>
 			<span><?php echo Text::sprintf('MOD_EDELTA_DUNARE_LAST_DAYS', $daysShown); ?></span>
 		</div>
-
-		<?php if ($showMoreLink): ?>
-		<div class="mod-edelta-dunare-more">
-			<a href="<?php echo htmlspecialchars($moreUrl, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener">
-				<?php echo Text::_('MOD_EDELTA_DUNARE_MORE'); ?>
-			</a>
-		</div>
-		<?php endif; ?>
 
 		<?php if ($showChart): ?>
 		<div class="mod-edelta-dunare-chart-wrap">
@@ -194,5 +186,13 @@ $jsTitle  = json_encode(Text::sprintf('MOD_EDELTA_DUNARE_LAST_DAYS', $daysShown)
 		})();
 		</script>
 		<?php endif; ?>
+	<?php endif; ?>
+
+	<?php if ($showBottomLink): ?>
+	<div class="mod-edelta-dunare-more">
+		<a href="<?php echo htmlspecialchars($moreUrl, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener">
+			<?php echo Text::_('MOD_EDELTA_DUNARE_MORE'); ?>
+		</a>
+	</div>
 	<?php endif; ?>
 </div>
