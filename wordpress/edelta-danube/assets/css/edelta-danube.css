@@ -1,0 +1,16 @@
+/* edelta-danube — widget styles */
+.edelta-danube { max-width: 100%; }
+.edelta-danube-info { font-size: 0.95em; color: #333; margin-bottom: 0.5rem; }
+.edelta-danube-error { color: #b02a37; }
+.edelta-danube-error-detail { color: #6c757d; }
+.edelta-danube-chart-wrap { position: relative; height: 380px; width: 100%; margin-bottom: 1rem; }
+.edelta-danube-table-wrap { overflow-x: auto; }
+.edelta-danube-table { width: 100%; border-collapse: collapse; font-size: 0.95em; }
+.edelta-danube-table th,
+.edelta-danube-table td { padding: 6px 10px; border: 1px solid #dee2e6; text-align: center; white-space: nowrap; }
+.edelta-danube-table thead th { background: #436741; color: #fff; }
+.edelta-danube-table tbody tr:nth-child(even) { background: #f4f6f4; }
+.edelta-danube-empty { color: #6c757d; }
+.edelta-danube-more { margin-bottom: 0.75rem; font-size: 0.9em; }
+.edelta-danube-more a { color: #1a73e8; text-decoration: none; border-bottom: 1px dotted #1a73e8; }
+.edelta-danube-more a:hover { text-decoration: underline; }

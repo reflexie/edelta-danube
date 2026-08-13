@@ -1,0 +1,141 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: edelta-danube 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/reflexie/edelta-danube\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru-RU\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: edelta-danube/includes/class-edelta-settings.php
+
+msgid "API base URL"
+msgstr "Базовый URL API"
+
+
+#: edelta-danube/includes/class-edelta-settings.php
+
+msgid "Cache time (seconds)"
+msgstr "Время кеша (секунды)"
+
+
+#: edelta-danube/includes/class-edelta-settings.php
+
+msgid "Chart"
+msgstr "График"
+
+
+#: edelta-danube/includes/class-edelta-settings.php
+
+msgid "Chart and table"
+msgstr "График и таблица"
+
+
+#: edelta-danube/includes/class-edelta-settings.php
+
+msgid "Chart line color"
+msgstr "Цвет линии"
+
+
+#: edelta-danube/includes/class-edelta-shortcode.php
+
+msgid "Date"
+msgstr "Дата"
+
+
+#: edelta-danube/includes/class-edelta-settings.php
+
+msgid "Days"
+msgstr "Дни"
+
+
+#: edelta-danube/includes/class-edelta-settings.php
+
+msgid "Display"
+msgstr "Отображение"
+
+
+#: edelta-danube/includes/class-edelta-settings.php
+
+msgid "Enable backlink to edelta.ro?"
+msgstr "Включить обратную ссылку на edelta.ro?"
+
+
+#: edelta-danube/includes/class-edelta-shortcode.php
+
+msgid "Last %s days"
+msgstr "Последние %s дней"
+
+
+#: edelta-danube/includes/class-edelta-shortcode.php
+
+msgid "Level"
+msgstr "Уровень"
+
+
+#: edelta-danube/includes/class-edelta-shortcode.php
+
+msgid "More data on edelta.ro"
+msgstr "Больше данных на edelta.ro"
+
+
+#: edelta-danube/includes/class-edelta-shortcode.php
+
+msgid "No data available."
+msgstr "Нет данных."
+
+
+#: edelta-danube/includes/class-edelta-settings.php
+
+msgid "Number of recent days to show (the public API serves at most 30)."
+msgstr "Количество последних дней для отображения (публичный API отдаёт максимум 30)."
+
+
+#: edelta-danube/includes/class-edelta-settings.php
+
+msgid "Select the port"
+msgstr "Выберите порт"
+
+
+#: edelta-danube/includes/class-edelta-settings.php
+
+msgid "Show a small link to edelta.ro at the bottom of the widget."
+msgstr "Показывает небольшую ссылку на edelta.ro внизу виджета."
+
+
+#: edelta-danube/includes/class-edelta-settings.php
+
+msgid "Table"
+msgstr "Таблица"
+
+
+#: edelta-danube/includes/class-edelta-shortcode.php
+
+msgid "Temp."
+msgstr "Темп."
+
+
+#: edelta-danube/includes/class-edelta-settings.php
+
+msgid "The Danube port (1..23) to display data for."
+msgstr "Дунайский порт (1..23), для которого отображаются данные."
+
+
+#: edelta-danube/includes/class-edelta-shortcode.php
+
+msgid "Unable to load data."
+msgstr "Не удалось загрузить данные."
+
+
+#: edelta-danube/includes/class-edelta-settings.php
+
+msgid "Use the shortcode %s anywhere on your site."
+msgstr "Используйте шорткод %s в любом месте сайта."
+
+
+#: edelta-danube/includes/class-edelta-settings.php
+
+msgid "edelta Danube Levels"
+msgstr "edelta Дунай уровни"
+

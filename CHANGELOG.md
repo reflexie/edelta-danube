@@ -13,6 +13,19 @@
   - Admin params: port, days, display mode (chart / table / both), line color
   - Bundled Chart.js v2.9.1 (MIT) + en-GB/ro-RO/de-DE/ru-RU
 
+## [1.0.0] — 2026-08-13 (WordPress plugin)
+
+### Added
+
+- WordPress plugin `edelta-danube` (`wordpress/edelta-danube/`)
+  - `[edelta_danube]` shortcode with per-instance attributes + global defaults
+  - chart / table / both display modes; Chart.js v4 bundled (MIT)
+  - server-side fetch from the public api.edelta.ro `recent` endpoint (max 30 days)
+    with transient caching; no API key required
+  - optional backlink to edelta.ro (admin toggle)
+  - i18n: en, ro_RO, de_DE, ru_RU
+  - verified on WordPress 7.0.2 (local): all modes, backlink on/off, ro_RO strings
+
 ## [1.1.3] — 2026-08-13
 
 ### Changed
