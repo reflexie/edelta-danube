@@ -3,7 +3,7 @@
  * Plugin Name:       edelta Danube Levels
  * Plugin URI:        https://github.com/reflexie/edelta-danube
  * Description:       Displays Danube water level and water temperature (chart and/or table) using the public api.edelta.ro API. Free plugin, no API key required.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 5.0
  * Requires PHP:      7.4
  * Author:            edelta-danube contributors
@@ -16,7 +16,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'EDELTA_DANUBE_VERSION', '1.0.0' );
+define( 'EDELTA_DANUBE_VERSION', '1.0.1' );
 define( 'EDELTA_DANUBE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'EDELTA_DANUBE_URL', plugin_dir_url( __FILE__ ) );
 

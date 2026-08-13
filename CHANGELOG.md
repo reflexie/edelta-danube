@@ -13,6 +13,13 @@
   - Admin params: port, days, display mode (chart / table / both), line color
   - Bundled Chart.js v2.9.1 (MIT) + en-GB/ro-RO/de-DE/ru-RU
 
+## [1.0.1] — 2026-08-13 (WordPress plugin)
+
+### Changed
+
+- The data table now shows only the most recent **7 records, newest first**;
+  the chart still shows the full window.
+
 ## [1.0.0] — 2026-08-13 (WordPress plugin)
 
 ### Added

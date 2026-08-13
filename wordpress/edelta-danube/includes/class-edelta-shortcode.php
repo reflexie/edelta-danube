@@ -86,6 +86,9 @@ class Edelta_Shortcode {
 			$temp[] = ( '' !== $t ) ? (float) $t : null;
 		}
 
+		// Table: only the most recent 7 records, newest first.
+		$table_rows = array_reverse( array_slice( $rows, -7 ) );
+
 		$last_days = sprintf( __( 'Last %s days', 'edelta-danube' ), $days_shown );
 		$title     = ( $port_name ? $port_name . ' — ' : '' ) . $last_days;
 
@@ -132,10 +135,10 @@ class Edelta_Shortcode {
 								</tr>
 							</thead>
 							<tbody>
-							<?php if ( empty( $rows ) ) : ?>
+							<?php if ( empty( $table_rows ) ) : ?>
 								<tr><td colspan="3" class="edelta-danube-empty"><?php esc_html_e( 'No data available.', 'edelta-danube' ); ?></td></tr>
 							<?php else : ?>
-								<?php foreach ( $rows as $r ) : ?>
+								<?php foreach ( $table_rows as $r ) : ?>
 									<tr>
 										<td><?php echo esc_html( $r['date_rom'] ); ?></td>
 										<td><?php echo esc_html( null !== $r['cota'] ? $r['cota'] : '' ); ?></td>

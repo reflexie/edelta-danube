@@ -101,7 +101,7 @@ A chart-only widget for Corabia with a custom line color:
 
 - **Info line** — the port name and the shown period (e.g. *TULCEA — Last 30 days*).
 - **Chart** — water level (left axis, cm) and water temperature (right axis, °C) over time.
-- **Table** — date / level / temperature for each day.
+- **Table** — date / level / temperature for the **most recent 7 records, newest first**.
 - **Backlink** (optional) — a small "More data on edelta.ro" link at the bottom,
   pointing to `https://edelta.ro`.
 
@@ -156,5 +156,6 @@ Translations load automatically when WordPress is set to that site language.
 
 ## 10. Changelog
 
-**1.0.0** — initial release: shortcode, chart/table/both, settings, caching,
-backlink toggle, i18n.
+**1.0.1** — the data table now shows only the most recent 7 records, newest first.
+
+**1.0.0** — initial release: shortcode, chart/table/both, settings, caching, backlink toggle, i18n.
