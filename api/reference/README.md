@@ -1,10 +1,5 @@
-# Public API reference implementation
 
-Single-file PHP (PDO/MySQL) implementation of the public, rate-limited endpoints.
-Use it as a reference to adapt into your existing `api.edelta.ro` service, or as a
-standalone endpoint.
-
-## What it does
+# What it does
 
 - Reads DB credentials from environment variables (never hard-coded).
 - Serves:
