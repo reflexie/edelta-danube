@@ -1,7 +1,7 @@
 
 # What it does
 
-- Reads DB credentials from environment variables (never hard-coded).
+
 - Serves:
   - `GET /api/ports`
   - `GET /api/measurements/latest?port_id=X`
