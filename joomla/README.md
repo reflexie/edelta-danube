@@ -8,9 +8,9 @@ Displays Danube **water level** and **water temperature** for a selected port as
 - Joomla 4 / 5 / 6 compatible (modern namespaced structure).
 - Fetches data **server-side** from the public api.edelta.ro endpoints — **no API
   key required** and no key is ever shipped in the extension.
-- The public API serves the **latest ≤30 days**; when more is requested the
-  module shows a small "more data on edelta.ro" link (configurable URL) to drive
-  visitors to the full history on edelta.ro.
+- The public API serves the **latest ≤30 days**; the module shows a small,
+  permanent **backlink to edelta.ro** at the bottom (admin toggle:
+  "Enable backlink to edelta.ro?").
 - API responses are cached (default 10 minutes) to protect the public API.
 - Chart.js is bundled locally (v2.9.1, MIT) — no external CDN needed.
 - Languages: English, Romanian, German, Russian.

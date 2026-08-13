@@ -30,12 +30,12 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
 
         $params = $data['params'];
 
-        $data['module_port']    = (int) $params->get('port', 2);
-        $data['module_days']    = (int) $params->get('days', 30);
-        $data['module_display'] = (string) $params->get('display', 'both');
-        $data['module_border']  = (string) $params->get('borderColor', '#436741');
-        $data['module_api']     = rtrim((string) $params->get('api_base', 'https://api.edelta.ro'), '/');
-        $data['module_more_url'] = rtrim((string) $params->get('more_url', 'https://edelta.ro/cotele-apelor-dunarii'), '/');
+        $data['module_port']         = (int) $params->get('port', 2);
+        $data['module_days']         = (int) $params->get('days', 30);
+        $data['module_display']      = (string) $params->get('display', 'both');
+        $data['module_border']       = (string) $params->get('borderColor', '#436741');
+        $data['module_api']          = rtrim((string) $params->get('api_base', 'https://api.edelta.ro'), '/');
+        $data['module_show_backlink'] = (int) $params->get('show_backlink', 1);
 
         // Fetch (and cache) the data from the public API.
         $data['module_result'] = $this->getHelperFactory()

@@ -16,11 +16,13 @@ $days    = (int) $module_days;
 $display = (string) $module_display;
 $border  = (string) $module_border;
 $result  = $module_result;
-$moreUrl = (string) $module_more_url;
+
+// Backlink to edelta.ro (fixed target, admin toggles on/off).
+$showBacklink = (bool) $module_show_backlink;
+$backlinkUrl  = 'https://edelta.ro';
 
 // The public API serves at most 30 days; show the actual days returned.
-$daysShown     = (int) ($result['days'] ?? $days);
-$showBottomLink = $moreUrl !== '';
+$daysShown = (int) ($result['days'] ?? $days);
 
 $showChart = ($display === 'chart' || $display === 'both');
 $showTable = ($display === 'table' || $display === 'both');
@@ -188,9 +190,9 @@ $jsTitle  = json_encode(Text::sprintf('MOD_EDELTA_DUNARE_LAST_DAYS', $daysShown)
 		<?php endif; ?>
 	<?php endif; ?>
 
-	<?php if ($showBottomLink): ?>
+	<?php if ($showBacklink): ?>
 	<div class="mod-edelta-dunare-more">
-		<a href="<?php echo htmlspecialchars($moreUrl, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener">
+		<a href="<?php echo htmlspecialchars($backlinkUrl, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener">
 			<?php echo Text::_('MOD_EDELTA_DUNARE_MORE'); ?>
 		</a>
 	</div>

@@ -13,6 +13,17 @@
   - Admin params: port, days, display mode (chart / table / both), line color
   - Bundled Chart.js v2.9.1 (MIT) + en-GB/ro-RO/de-DE/ru-RU
 
+## [1.1.3] — 2026-08-13
+
+### Changed
+
+- Admin **module edit form**: the module name and description now translate
+  correctly (the two keys were only in the `.sys.ini`, which the edit form does
+  not load — they are now also present in the regular `.ini` files).
+- The "More data URL" text field was replaced by an informative admin toggle:
+  **"Enable backlink to edelta.ro?"** (Yes/No). The bottom link target is fixed
+  to `https://edelta.ro` and is no longer editable.
+
 ## [1.1.2] — 2026-08-13
 
 ### Changed
