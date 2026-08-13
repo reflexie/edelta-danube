@@ -78,7 +78,7 @@ Each shortcode can override the defaults. All attributes are optional.
 | `display` | `chart`, `table`, `both` | settings default (both) |
 | `border` | any hex color, e.g. `#436741` | settings default |
 | `api_base` | a URL | `https://api.edelta.ro` |
-| `backlink` | `1` or `0` | settings default (1) |
+| `backlink` | `1` or `0` | settings default (1) - Recommended|
 | `cache` | seconds (min 60) | settings default (600) |
 
 **Examples**
